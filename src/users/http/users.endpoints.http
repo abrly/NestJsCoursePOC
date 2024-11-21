@@ -1,0 +1,28 @@
+GET http://localhost:3000/users/5245
+?limit=10
+&page=d1
+
+POST http://localhost:3000/users
+Content-Type: application/json
+{
+    "firstName":"Akba",
+    "lastName":"Maje",
+    "email":"abrly@yahoo.com",
+    "password":"test99"    
+}
+
+
+
+
+DELETE http://localhost:3000/users
+
+
+PATCH http://localhost:3000/users
+Content-Type: application/json
+{
+    "email":"abrly@yahoo.com",
+    "password":"test99"
+}
+
+
+PUT http://localhost:3000/users
