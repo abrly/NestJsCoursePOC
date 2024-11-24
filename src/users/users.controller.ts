@@ -20,11 +20,37 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersParamDto } from './dtos/get-users-param.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
 
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get('/:id?')
+  @ApiOperation({
+    summary:"get the registerd users with or without id"
+  })
+  @ApiResponse({
+    status:200,
+    description:"Users fetched successfully"
+  })
+  @ApiQuery({
+    name:"limit",
+    type:Number,
+    example:10,
+    required:false,
+    description:"Number of queries returned from query"
+
+  })
+  @ApiQuery({
+    name:"page",
+    type:Number,
+    example:1,
+    required:false,
+    description:"current page number"
+
+  })
   public getUsers(
     @Param() getUsersParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe('10'), ParseIntPipe)
