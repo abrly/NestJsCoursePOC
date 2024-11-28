@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { PostsService } from './posts.service'
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { CreatePostDto } from './dtos/create-post.dto'
@@ -16,7 +16,7 @@ export class PostsController {
   /**
   get post api calls
 */
-  @Get()
+  @Get('/:userId?')
   @ApiOperation({
     summary: 'get all the posts',
   })
@@ -24,27 +24,26 @@ export class PostsController {
     status: 200,
     description: 'Posts fetched successfully',
   })
-  getPosts() {
-    return this.postsSevice.GetPosts()
+  getPosts(@Param('userId') userId: string) {
+    return this.postsSevice.GetPosts(parseInt(userId));
   }
 
 
-    /**
-  post api calls
-*/
-  @Post()
   @ApiOperation({
-    summary:"post new post info"
+    summary: 'Creates a new blog post',
   })
   @ApiResponse({
-    status:201,
-    description:"Posts added successfully"
+    status: 201,
+    description: 'You get a 201 response if your post is created successfully',
   })
-  createPost(@Body() createPostDto: CreatePostDto) {
-    return createPostDto;
+  @Post()
+  public createPost(@Body() createPostDto: CreatePostDto) {
+    return this.postsSevice.create(createPostDto);
   }
 
 
+
+  
    /**
   update api calls
 */
